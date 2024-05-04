@@ -16,6 +16,15 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"console.log(jsonData)\r",
+									"console.log(jsonData.apiVersion)\r",
+									"console.log(jsonData.categories[3])\r",
+									"console.log(jsonData.links[0].rel)\r",
+									"\r",
+									"pm.environment.set(\"entityCAT\", jsonData.categories[3]);\r",
+									"pm.environment.set(\"entityLINK\", jsonData.links[0].rel);\r",
+									"\r",
 									"pm.test(\"Status code should 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
@@ -24,10 +33,6 @@
 									"    pm.response.to.have.status(\"OK\");\r",
 									"});\r",
 									"\r",
-									"var jsonData = pm.response.json();\r",
-									"console.log(jsonData)\r",
-									"console.log(jsonData.apiVersion)\r",
-									"console.log(jsonData.categories[3])\r",
 									"\r",
 									"\r",
 									"pm.test(\"Confirm that apiVersion is 7.2.6.0\", function () { \r",
@@ -36,6 +41,10 @@
 									"\r",
 									"pm.test(\"Confirm that categories 3 is backend\", function () { \r",
 									"    pm.expect(jsonData.categories[3]).to.eql(\"backend\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Confirm that link rel is root\", function () { \r",
+									"    pm.expect(jsonData.links[0].rel).to.eql(\"root\");\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Body matches string\", function () {\r",
@@ -66,15 +75,9 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://demo.fusio-project.org/index.php",
-							"protocol": "https",
+							"raw": "{{BaseURL}}",
 							"host": [
-								"demo",
-								"fusio-project",
-								"org"
-							],
-							"path": [
-								"index.php"
+								"{{BaseURL}}"
 							],
 							"query": [
 								{
@@ -101,7 +104,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -109,16 +113,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://demo.fusio-project.org/index.php/",
-							"protocol": "https",
+							"raw": "{{BaseURL}}",
 							"host": [
-								"demo",
-								"fusio-project",
-								"org"
-							],
-							"path": [
-								"index.php",
-								""
+								"{{BaseURL}}"
 							],
 							"query": [
 								{
@@ -150,15 +147,9 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://demo.fusio-project.org/index.php",
-							"protocol": "https",
+							"raw": "{{BaseURL}}",
 							"host": [
-								"demo",
-								"fusio-project",
-								"org"
-							],
-							"path": [
-								"index.php"
+								"{{BaseURL}}"
 							],
 							"query": [
 								{
